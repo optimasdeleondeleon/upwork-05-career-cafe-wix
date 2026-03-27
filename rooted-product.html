@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>R.O.O.T.E.D. Journal — Volume 1</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0D0D0D;
+      --black-soft: #1a1a1a;
+      --gold: #C9A84C;
+      --gold-light: #e8d49a;
+      --gold-dim: rgba(201,168,76,0.15);
+      --cream: #F5F0E8;
+      --cream-dark: #EDE6D4;
+      --white: #FFFFFF;
+      --gray-text: #888;
+      --font-display: 'Georgia', 'Times New Roman', serif;
+      --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--black);
+      color: var(--cream);
+      line-height: 1.6;
+    }
+
+    /* ─── ANNOUNCEMENT BAR ─── */
+    .announcement-bar {
+      background: var(--gold);
+      color: var(--black);
+      text-align: center;
+      padding: 10px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ─── NAV ─── */
+    header {
+      background: var(--black);
+      border-bottom: 1px solid rgba(201,168,76,0.25);
+      padding: 0 48px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-rooted {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .logo-rooted .brand-abbr {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 4px;
+    }
+
+    .logo-rooted .brand-full {
+      font-size: 8px;
+      font-weight: 600;
+      color: rgba(245,240,232,0.5);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    nav { display: flex; gap: 32px; }
+
+    nav a {
+      text-decoration: none;
+      color: rgba(245,240,232,0.7);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav a:hover, nav a.active { color: var(--gold); }
+
+    .header-actions { display: flex; gap: 16px; align-items: center; }
+
+    .nav-btn {
+      background: none;
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--cream);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 8px 14px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+    .nav-btn svg { width: 16px; height: 16px; }
+
+    /* ─── FULL-WIDTH HERO ─── */
+    .brand-hero {
+      background: var(--black);
+      padding: 80px 48px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .brand-hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      opacity: 0.9;
+    }
+
+    .hero-brand-name {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 8vw, 88px);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 0.95;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+
+    .hero-brand-name span { color: var(--gold); }
+
+    .hero-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-style: italic;
+      color: rgba(245,240,232,0.6);
+      margin-top: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-tagline strong { color: var(--gold); font-style: normal; }
+
+    .hero-volume-badge {
+      display: inline-block;
+      margin-top: 28px;
+      border: 1px solid rgba(201,168,76,0.4);
+      color: rgba(245,240,232,0.5);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 2px;
+    }
+
+    /* ─── PRODUCT SECTION ─── */
+    .product-section {
+      max-width: 1200px;
+      margin: 72px auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    /* ─── CAMPAIGN IMAGE ─── */
+    .campaign-visual { display: flex; flex-direction: column; gap: 16px; }
+
+    .campaign-main {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: #111;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .campaign-main::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+    }
+
+    .campaign-main-icon {
+      width: 56px;
+      height: 56px;
+      opacity: 0.2;
+      color: var(--gold);
+    }
+
+    .campaign-placeholder-text {
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(201,168,76,0.4);
+    }
+
+    .campaign-placeholder-sub {
+      font-size: 10px;
+      color: rgba(201,168,76,0.25);
+      letter-spacing: 1px;
+    }
+
+    .campaign-corner {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: var(--gold);
+      color: var(--black);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 10px;
+    }
+
+    .campaign-thumbs { display: flex; gap: 10px; }
+
+    .campaign-thumb {
+      flex: 1;
+      aspect-ratio: 1;
+      background: #111;
+      border: 1px solid rgba(201,168,76,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(201,168,76,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .campaign-thumb:hover, .campaign-thumb.active { border-color: var(--gold); color: var(--gold); }
+
+    /* ─── PRODUCT DETAILS PANEL ─── */
+    .product-panel { display: flex; flex-direction: column; gap: 28px; }
+
+    .product-series {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .product-series::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(201,168,76,0.2);
+    }
+
+    .product-title-panel {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--cream);
+    }
+
+    .product-title-panel .vol { color: var(--gold); }
+
+    .emotional-tagline {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-style: italic;
+      color: rgba(245,240,232,0.55);
+      line-height: 1.5;
+      padding-left: 16px;
+      border-left: 2px solid var(--gold);
+    }
+
+    .product-description-panel {
+      font-size: 15px;
+      color: rgba(245,240,232,0.7);
+      line-height: 1.8;
+    }
+
+    /* ─── PRICING BLOCK ─── */
+    .pricing-block {
+      background: #111;
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pricing-row { display: flex; align-items: center; justify-content: space-between; }
+
+    .price-main {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: -1px;
+    }
+
+    .price-sub {
+      font-size: 12px;
+      color: rgba(245,240,232,0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .instant-download-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold-dim);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--gold);
+      width: fit-content;
+    }
+
+    .instant-download-badge svg { width: 14px; height: 14px; }
+
+    /* ─── CTA ─── */
+    .cta-stack { display: flex; flex-direction: column; gap: 12px; }
+
+    .btn-cta-gold {
+      width: 100%;
+      padding: 18px 40px;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-cta-gold:hover { background: var(--gold-light); transform: translateY(-2px); }
+    .btn-cta-gold:active { transform: translateY(0); }
+    .btn-cta-gold svg { width: 18px; height: 18px; }
+
+    .btn-ghost {
+      width: 100%;
+      padding: 16px 40px;
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(245,240,232,0.2);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .btn-ghost svg { width: 16px; height: 16px; }
+
+    .purchase-note {
+      font-size: 12px;
+      color: rgba(245,240,232,0.35);
+      text-align: center;
+      letter-spacing: 0.3px;
+    }
+
+    /* ─── SOCIAL PROOF ─── */
+    .social-proof-bar {
+      background: #0a0a0a;
+      border: 1px solid rgba(201,168,76,0.1);
+      border-left: 3px solid var(--gold);
+      padding: 20px 24px;
+    }
+
+    .stars-gold { color: var(--gold); font-size: 18px; letter-spacing: 2px; }
+    .proof-meta { font-size: 12px; color: rgba(245,240,232,0.4); margin-top: 4px; letter-spacing: 0.5px; }
+    .proof-quote { font-family: var(--font-display); font-style: italic; color: rgba(245,240,232,0.65); font-size: 14px; margin-top: 10px; line-height: 1.6; }
+    .proof-author { font-size: 12px; color: var(--gold); font-weight: 600; margin-top: 8px; letter-spacing: 0.5px; }
+
+    /* ─── DIVIDER ─── */
+    .gold-divider {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .gold-divider hr {
+      border: none;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+
+    /* ─── NICOLE'S NOTE ─── */
+    .nicole-section {
+      max-width: 1200px;
+      margin: 72px auto;
+      padding: 0 48px;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    .nicole-portrait {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .portrait-placeholder {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: #111;
+      border: 2px solid rgba(201,168,76,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .portrait-placeholder svg { width: 40px; height: 40px; color: rgba(201,168,76,0.3); }
+    .portrait-placeholder span { font-size: 10px; color: rgba(201,168,76,0.3); letter-spacing: 1px; text-transform: uppercase; }
+
+    .nicole-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--cream);
+      text-align: center;
+    }
+
+    .nicole-title {
+      font-size: 11px;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .nicole-note { display: flex; flex-direction: column; gap: 20px; }
+
+    .note-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .note-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(201,168,76,0.2);
+    }
+
+    .note-heading {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.2;
+    }
+
+    .note-body {
+      font-size: 15px;
+      color: rgba(245,240,232,0.65);
+      line-height: 1.9;
+    }
+
+    .note-body p + p { margin-top: 14px; }
+
+    .note-signature {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 22px;
+      color: var(--gold);
+      margin-top: 8px;
+    }
+
+    /* ─── DELIVERY INFO ─── */
+    .delivery-section {
+      max-width: 1200px;
+      margin: 64px auto;
+      padding: 0 48px;
+    }
+
+    .delivery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: rgba(201,168,76,0.1);
+    }
+
+    .delivery-card {
+      background: var(--black);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .delivery-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(201,168,76,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .delivery-icon svg { width: 20px; height: 20px; }
+
+    .delivery-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.3px;
+    }
+
+    .delivery-desc {
+      font-size: 13px;
+      color: rgba(245,240,232,0.45);
+      line-height: 1.6;
+    }
+
+    /* ─── MORE REVIEWS ─── */
+    .reviews-section {
+      background: #080808;
+      padding: 72px 48px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .reviews-inner { max-width: 1200px; margin: 0 auto; }
+
+    .reviews-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .reviews-header h2 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--cream);
+    }
+
+    .reviews-header a {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .review-stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; }
+    .review-quote { font-family: var(--font-display); font-style: italic; font-size: 14px; color: rgba(245,240,232,0.6); line-height: 1.7; }
+    .review-author { font-size: 12px; color: var(--gold); font-weight: 600; letter-spacing: 0.5px; }
+    .review-date { font-size: 11px; color: rgba(245,240,232,0.25); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #000;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 56px 48px 32px;
+    }
+
+    .footer-top {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .footer-brand-col .brand-abbr {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 4px;
+    }
+
+    .footer-tagline-text {
+      font-size: 13px;
+      color: rgba(245,240,232,0.4);
+      margin-top: 12px;
+      line-height: 1.7;
+    }
+
+    .footer-social { display: flex; gap: 12px; margin-top: 20px; }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(201,168,76,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(245,240,232,0.4);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    .footer-col-nav h4 {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .footer-col-nav ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col-nav a { color: rgba(245,240,232,0.45); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+    .footer-col-nav a:hover { color: var(--cream); }
+
+    .footer-bottom-bar {
+      max-width: 1200px;
+      margin: 24px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: rgba(245,240,232,0.25);
+    }
+
+    /* ─── WIX BADGE ─── */
+    .wix-spec-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #116DFF;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 100px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      z-index: 9999;
+    }
+
+    @media (max-width: 900px) {
+      .product-section { grid-template-columns: 1fr; gap: 40px; padding: 0 24px; }
+      .nicole-section { grid-template-columns: 1fr; padding: 0 24px; }
+      .nicole-portrait { flex-direction: row; gap: 24px; align-items: center; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .delivery-grid { grid-template-columns: 1fr; }
+      header { padding: 0 24px; }
+      nav { display: none; }
+      .footer-top { grid-template-columns: 1fr; gap: 32px; padding: 0 24px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ANNOUNCEMENT -->
+  <div class="announcement-bar">
+    Volume 1 Now Available &mdash; Limited First Edition Print Run
+  </div>
+
+  <!-- NAV -->
+  <header>
+    <a href="#" class="logo-rooted">
+      <span class="brand-abbr">R.O.O.T.E.D.</span>
+      <span class="brand-full">Rooted Opportunities &amp; Organized Thoughts for Everyday Direction</span>
+    </a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#" class="active">Shop</a>
+      <a href="#">Our Story</a>
+      <a href="#">Community</a>
+    </nav>
+    <div class="header-actions">
+      <button class="nav-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+        </svg>
+        Cart (0)
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="brand-hero">
+    <div class="hero-eyebrow">New Release &mdash; Volume 1</div>
+    <h1 class="hero-brand-name"><span>R.O.O.T.E.D.</span><br>Journals</h1>
+    <p class="hero-tagline">Your Story. <strong>Your Direction.</strong> Your Root.</p>
+    <div class="hero-volume-badge">Volume 1 &mdash; First Edition</div>
+  </section>
+
+  <!-- PRODUCT SECTION -->
+  <section class="product-section">
+
+    <!-- LEFT: Campaign Visual -->
+    <div class="campaign-visual">
+      <div class="campaign-main">
+        <div class="campaign-corner">New</div>
+        <svg class="campaign-main-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <div class="campaign-placeholder-text">Campaign Photography</div>
+        <div class="campaign-placeholder-sub">Recommended: 800×1000px — 4:5 ratio</div>
+      </div>
+      <div class="campaign-thumbs">
+        <div class="campaign-thumb active">Cover</div>
+        <div class="campaign-thumb">Inside</div>
+        <div class="campaign-thumb">Spread</div>
+        <div class="campaign-thumb">Lifestyle</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Product Panel -->
+    <div class="product-panel">
+
+      <div class="product-series">R.O.O.T.E.D. Collection</div>
+
+      <h1 class="product-title-panel">
+        R.O.O.T.E.D. Journal<br>
+        <span class="vol">Volume 1</span>
+      </h1>
+
+      <blockquote class="emotional-tagline">
+        "Your Story. Your Direction. Your Root."
+      </blockquote>
+
+      <p class="product-description-panel">
+        This is not just a journal. It's a declaration. R.O.O.T.E.D. Volume 1 was designed for the woman who knows she's destined for more and is ready to do the daily work to get there. Every page is an act of intention.
+      </p>
+
+      <!-- PRICING -->
+      <div class="pricing-block">
+        <div class="pricing-row">
+          <div>
+            <div class="price-main">$29.99</div>
+            <div class="price-sub">Digital Download &mdash; One-time purchase</div>
+          </div>
+          <div class="instant-download-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v10m0 0l-3-3m3 3l3-3"/>
+              <path d="M20 16v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4"/>
+            </svg>
+            Instant PDF
+          </div>
+        </div>
+        <div class="stars-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="proof-meta">4.9 out of 5 &mdash; 61 reviews</div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-stack">
+        <button class="btn-cta-gold">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Get Your Copy &mdash; $29.99
+        </button>
+        <button class="btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+          Save to Wishlist
+        </button>
+        <div class="purchase-note">Secure checkout &bull; Instant delivery &bull; No refunds on digital downloads</div>
+      </div>
+
+      <!-- SOCIAL PROOF PULL QUOTE -->
+      <div class="social-proof-bar">
+        <div class="stars-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="proof-quote">"I've tried so many planners. This one actually made me feel like I was building something real for myself. It's more than a journal &mdash; it's a mirror."</div>
+        <div class="proof-author">&mdash; Tiara M., Atlanta GA</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="gold-divider"><hr /></div>
+
+  <!-- NICOLE'S NOTE -->
+  <section class="nicole-section">
+    <div class="nicole-portrait">
+      <div class="portrait-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <span>Photo</span>
+      </div>
+      <div class="nicole-name">Nicole</div>
+      <div class="nicole-title">Founder &amp; Creator</div>
+    </div>
+
+    <div class="nicole-note">
+      <div class="note-label">A Note from Nicole</div>
+      <h2 class="note-heading">I made this<br>for the version of me<br>who needed it most.</h2>
+      <div class="note-body">
+        <p>R.O.O.T.E.D. started as a personal promise. I was tired of feeling scattered &mdash; all the ambition, none of the structure. I needed a space that felt like mine, that met me where I actually was, and challenged me to go further.</p>
+        <p>Volume 1 is the journal I wish I had during the years I was figuring it out. It's built for the days when you're motivated and the days when you're not. Every prompt, every layout, every margin was designed with you in mind.</p>
+        <p>This is your root. Plant it on purpose.</p>
+      </div>
+      <div class="note-signature">Nicole</div>
+    </div>
+  </section>
+
+  <div class="gold-divider"><hr /></div>
+
+  <!-- DIGITAL DELIVERY INFO -->
+  <section class="delivery-section">
+    <div class="delivery-grid">
+      <div class="delivery-card">
+        <div class="delivery-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v10m0 0l-3-3m3 3l3-3"/>
+            <path d="M20 16v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4"/>
+          </svg>
+        </div>
+        <div class="delivery-title">Instant Download</div>
+        <div class="delivery-desc">Your PDF is delivered immediately after checkout. No waiting, no shipping, no delays.</div>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div class="delivery-title">High-Res PDF</div>
+        <div class="delivery-desc">300 DPI print-ready file. Works on GoodNotes, Notability, and any printer.</div>
+      </div>
+      <div class="delivery-card">
+        <div class="delivery-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="delivery-title">Lifetime Access</div>
+        <div class="delivery-desc">Re-download anytime from your account. Your purchase never expires.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section">
+    <div class="reviews-inner">
+      <div class="reviews-header">
+        <h2>What They're Saying</h2>
+        <a href="#">View all 61 reviews</a>
+      </div>
+      <div class="reviews-grid">
+        <div class="review-card">
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="review-quote">"Every page pushed me to be more intentional. I finished Volume 1 and immediately ordered Volume 2 when it drops."</div>
+          <div class="review-author">Jasmine R.</div>
+          <div class="review-date">February 2025</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="review-quote">"The prompts go deep. Not surface level fluff &mdash; real questions that made me examine where I was putting my energy."</div>
+          <div class="review-author">Monique T.</div>
+          <div class="review-date">January 2025</div>
+        </div>
+        <div class="review-card">
+          <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <div class="review-quote">"The design is beautiful and intentional. It doesn't feel like a template — it feels like it was made for women like me."</div>
+          <div class="review-author">Destiny W.</div>
+          <div class="review-date">March 2025</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <div class="brand-abbr">R.O.O.T.E.D.</div>
+        <p class="footer-tagline-text">Rooted Opportunities &amp; Organized Thoughts for Everyday Direction.<br>Journals built for women who are building on purpose.</p>
+        <div class="footer-social">
+          <a href="#" class="social-link">IG</a>
+          <a href="#" class="social-link">TK</a>
+          <a href="#" class="social-link">FB</a>
+          <a href="#" class="social-link">YT</a>
+        </div>
+      </div>
+      <div class="footer-col-nav">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">Volume 1</a></li>
+          <li><a href="#">Bundles</a></li>
+          <li><a href="#">Gift Cards</a></li>
+          <li><a href="#">Coming Soon</a></li>
+        </ul>
+      </div>
+      <div class="footer-col-nav">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#">Our Story</a></li>
+          <li><a href="#">Community</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom-bar">
+      <span>&copy; 2025 R.O.O.T.E.D. Journals. All rights reserved.</span>
+      <span>Powered by Wix eCommerce</span>
+    </div>
+  </footer>
+
+  <div class="wix-spec-badge">Wix Product Page Template &mdash; R.O.O.T.E.D. Journals</div>
+
+</body>
+</html>

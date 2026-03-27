@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Cafe Journal — Daily Planning Edition</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal: #2A8C94;
+      --teal-dark: #1f6e75;
+      --teal-light: #e8f5f6;
+      --black: #1A1A1A;
+      --white: #FFFFFF;
+      --gray-light: #f4f4f4;
+      --gray-mid: #e0e0e0;
+      --gray-text: #666666;
+      --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      --font-serif: Georgia, 'Times New Roman', serif;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ─── HEADER / NAV ─── */
+    header {
+      border-bottom: 2px solid var(--teal);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      background: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: var(--teal);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-mark svg { width: 20px; height: 20px; }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--black);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-text span { color: var(--teal); }
+
+    nav { display: flex; gap: 28px; }
+
+    nav a {
+      text-decoration: none;
+      color: var(--black);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    nav a:hover, nav a.active { color: var(--teal); border-bottom-color: var(--teal); }
+
+    .header-actions { display: flex; gap: 16px; align-items: center; }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+
+    .icon-btn:hover { background: var(--gray-light); }
+    .icon-btn svg { width: 18px; height: 18px; }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      padding: 14px 40px;
+      font-size: 13px;
+      color: var(--gray-text);
+      background: var(--gray-light);
+      border-bottom: 1px solid var(--gray-mid);
+    }
+
+    .breadcrumb a { color: var(--teal); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* ─── PRODUCT HERO ─── */
+    .product-hero {
+      max-width: 1200px;
+      margin: 48px auto;
+      padding: 0 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* ─── IMAGE GALLERY ─── */
+    .image-gallery { display: flex; flex-direction: column; gap: 16px; }
+
+    .image-main {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--teal-light);
+      border: 2px dashed var(--teal);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--teal);
+    }
+
+    .image-main svg { width: 48px; height: 48px; opacity: 0.5; }
+    .image-main .placeholder-label { font-size: 13px; font-weight: 600; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.8px; }
+    .image-main .placeholder-sub { font-size: 12px; opacity: 0.5; }
+
+    .image-thumbs { display: flex; gap: 12px; }
+
+    .image-thumb {
+      flex: 1;
+      aspect-ratio: 1;
+      background: var(--teal-light);
+      border: 2px dashed var(--teal);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      font-size: 11px;
+      font-weight: 600;
+      opacity: 0.6;
+      cursor: pointer;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+
+    .image-thumb:hover, .image-thumb.active { opacity: 1; border-color: var(--teal-dark); }
+
+    /* ─── PRODUCT INFO ─── */
+    .product-info { display: flex; flex-direction: column; gap: 24px; }
+
+    .product-category {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--teal);
+    }
+
+    .product-title {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--black);
+    }
+
+    .product-rating { display: flex; align-items: center; gap: 8px; }
+    .stars { color: #f0a500; font-size: 16px; letter-spacing: 1px; }
+    .rating-count { font-size: 13px; color: var(--gray-text); }
+    .rating-count a { color: var(--teal); text-decoration: none; }
+
+    .product-price-block { display: flex; align-items: baseline; gap: 12px; }
+    .price { font-size: 36px; font-weight: 800; color: var(--teal); }
+    .price-label { font-size: 13px; color: var(--gray-text); }
+
+    .digital-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal-light);
+      border: 1.5px solid var(--teal);
+      color: var(--teal-dark);
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 100px;
+      width: fit-content;
+    }
+
+    .digital-badge svg { width: 16px; height: 16px; }
+
+    .product-description { font-size: 15px; color: #444; line-height: 1.75; }
+
+    .product-description p + p { margin-top: 12px; }
+
+    /* ─── FORMAT SELECTOR ─── */
+    .format-selector { display: flex; flex-direction: column; gap: 10px; }
+    .format-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--black); }
+    .format-options { display: flex; gap: 10px; }
+
+    .format-option {
+      padding: 8px 18px;
+      border: 2px solid var(--gray-mid);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: var(--white);
+    }
+
+    .format-option:hover { border-color: var(--teal); color: var(--teal); }
+    .format-option.selected { border-color: var(--teal); background: var(--teal); color: var(--white); }
+
+    /* ─── CTA AREA ─── */
+    .cta-group { display: flex; flex-direction: column; gap: 12px; }
+
+    .btn-add-to-cart {
+      width: 100%;
+      padding: 16px 32px;
+      background: var(--teal);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .btn-add-to-cart:hover { background: var(--teal-dark); transform: translateY(-1px); }
+    .btn-add-to-cart:active { transform: translateY(0); }
+    .btn-add-to-cart svg { width: 20px; height: 20px; }
+
+    .btn-wishlist {
+      width: 100%;
+      padding: 14px 32px;
+      background: var(--white);
+      color: var(--black);
+      border: 2px solid var(--gray-mid);
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-wishlist:hover { border-color: var(--teal); color: var(--teal); }
+    .btn-wishlist svg { width: 18px; height: 18px; }
+
+    .trust-signals {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--gray-text);
+      padding-top: 4px;
+    }
+
+    .trust-signals span { display: flex; align-items: center; gap: 5px; }
+    .trust-signals svg { width: 14px; height: 14px; color: var(--teal); }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    .divider hr { border: none; border-top: 1px solid var(--gray-mid); }
+
+    /* ─── ACCORDION ─── */
+    .accordion-section {
+      max-width: 1200px;
+      margin: 48px auto;
+      padding: 0 40px;
+    }
+
+    .accordion-section h2 {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      color: var(--black);
+    }
+
+    .accordion { border-top: 1px solid var(--gray-mid); }
+
+    .accordion-item { border-bottom: 1px solid var(--gray-mid); }
+
+    .accordion-header {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--black);
+      text-align: left;
+      transition: color 0.2s;
+    }
+
+    .accordion-header:hover { color: var(--teal); }
+    .accordion-header svg { width: 20px; height: 20px; color: var(--teal); flex-shrink: 0; transition: transform 0.2s; }
+    .accordion-header.open svg { transform: rotate(180deg); }
+
+    .accordion-body {
+      display: none;
+      padding: 4px 0 20px;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.75;
+    }
+
+    .accordion-body.open { display: block; }
+
+    .accordion-body ul { padding-left: 20px; margin-top: 8px; }
+    .accordion-body ul li { margin-bottom: 6px; }
+
+    /* ─── RELATED PRODUCTS ─── */
+    .related-section {
+      background: var(--gray-light);
+      padding: 64px 40px;
+      margin-top: 64px;
+    }
+
+    .related-section .inner { max-width: 1200px; margin: 0 auto; }
+
+    .related-section h2 {
+      font-family: var(--font-serif);
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      color: var(--black);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .related-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--gray-mid);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+
+    .related-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+
+    .related-card-img {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--teal-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.7;
+    }
+
+    .related-card-info { padding: 16px; }
+    .related-card-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .related-card-price { font-size: 16px; font-weight: 800; color: var(--teal); }
+    .related-card-type { font-size: 11px; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--black);
+      color: rgba(255,255,255,0.7);
+      padding: 48px 40px 32px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    .footer-brand .logo-text { color: var(--white); }
+    .footer-brand .logo-text span { color: var(--teal); }
+    .footer-tagline { font-size: 13px; margin-top: 10px; line-height: 1.6; }
+
+    .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--white); margin-bottom: 14px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; }
+    .footer-col a:hover { color: var(--teal); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 32px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+
+    /* ─── WIX BADGE ─── */
+    .wix-spec-badge {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #116DFF;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 8px 14px;
+      border-radius: 100px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 9999;
+    }
+
+    @media (max-width: 768px) {
+      .product-hero { grid-template-columns: 1fr; gap: 32px; padding: 0 20px; }
+      header { padding: 0 20px; }
+      nav { display: none; }
+      .related-grid { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <header>
+    <a href="#" class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      <span class="logo-text">Career <span>Cafe</span></span>
+    </a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#" class="active">Shop</a>
+      <a href="#">Resources</a>
+      <a href="#">About</a>
+      <a href="#">Blog</a>
+    </nav>
+    <div class="header-actions">
+      <button class="icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="icon-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Cart (0)
+      </button>
+    </div>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <a href="#">Home</a><span>/</span>
+    <a href="#">Shop</a><span>/</span>
+    <a href="#">Journals &amp; Planners</a><span>/</span>
+    Career Cafe Journal — Daily Planning Edition
+  </div>
+
+  <!-- PRODUCT HERO -->
+  <section class="product-hero">
+
+    <!-- LEFT: Images -->
+    <div class="image-gallery">
+      <div class="image-main">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <span class="placeholder-label">Product Image 1</span>
+        <span class="placeholder-sub">Recommended: 800×800px</span>
+      </div>
+      <div class="image-thumbs">
+        <div class="image-thumb active">IMG 1</div>
+        <div class="image-thumb">IMG 2</div>
+        <div class="image-thumb">Inside Pages</div>
+        <div class="image-thumb">Mockup</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="product-info">
+      <div class="product-category">Journals &amp; Planners &mdash; Digital Download</div>
+
+      <h1 class="product-title">Career Cafe Journal<br>Daily Planning Edition</h1>
+
+      <div class="product-rating">
+        <span class="stars">★★★★★</span>
+        <span class="rating-count"><a href="#">42 reviews</a></span>
+      </div>
+
+      <div class="product-price-block">
+        <span class="price">$24.99</span>
+        <span class="price-label">One-time purchase</span>
+      </div>
+
+      <div class="digital-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2v10m0 0l-3-3m3 3l3-3"/>
+          <path d="M20 16v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4"/>
+        </svg>
+        Instant Download &mdash; PDF
+      </div>
+
+      <div class="product-description">
+        <p>Designed for the ambitious professional who refuses to leave their career to chance. The Career Cafe Daily Planning Journal is your structured system for turning ambitions into daily actions.</p>
+        <p>Built around the 12-week planning cycle, each spread gives you space for morning intentions, priority stacking, and a dedicated reflection prompt — because progress without reflection is just motion.</p>
+      </div>
+
+      <div class="format-selector">
+        <span class="format-label">Format</span>
+        <div class="format-options">
+          <button class="format-option selected">PDF (Letter)</button>
+          <button class="format-option">PDF (A4)</button>
+          <button class="format-option">A5 Print</button>
+        </div>
+      </div>
+
+      <div class="cta-group">
+        <button class="btn-add-to-cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          Add to Cart &mdash; $24.99
+        </button>
+        <button class="btn-wishlist">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+          </svg>
+          Save to Wishlist
+        </button>
+      </div>
+
+      <div class="trust-signals">
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Secure checkout
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+          Instant access
+        </span>
+        <span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Printable PDF
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr/></div>
+
+  <!-- ACCORDION: PRODUCT DETAILS -->
+  <section class="accordion-section">
+    <h2>Product Details</h2>
+    <div class="accordion">
+
+      <div class="accordion-item">
+        <button class="accordion-header open" onclick="toggleAccordion(this)">
+          What's Inside
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-body open">
+          <ul>
+            <li>90-day / 12-week daily planning spreads (180 pages)</li>
+            <li>Weekly intention &amp; review templates</li>
+            <li>Monthly goal-setting framework</li>
+            <li>Career milestone tracker</li>
+            <li>Networking log &amp; follow-up system</li>
+            <li>Morning routine builder</li>
+            <li>Evening reflection prompts</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          File Details &amp; Printing Guide
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-body">
+          <p>Delivered as high-resolution PDF (300 DPI). Compatible with Adobe Acrobat, GoodNotes, Notability, and standard home printers. Letter (8.5×11") and A4 formats included.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          How Digital Delivery Works
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-body">
+          <p>After purchase, you'll receive an email with your secure download link within minutes. Files are available in your Wix account under "My Orders" for 30 days. No physical product will be shipped.</p>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleAccordion(this)">
+          Refund Policy
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="accordion-body">
+          <p>Due to the digital nature of this product, all sales are final. If you experience technical issues with your download, please contact us at hello@careercafe.co and we'll make it right.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RELATED PRODUCTS -->
+  <section class="related-section">
+    <div class="inner">
+      <h2>You Might Also Like</h2>
+      <div class="related-grid">
+        <div class="related-card">
+          <div class="related-card-img">Product Image</div>
+          <div class="related-card-info">
+            <div class="related-card-title">Career Cafe Resume Workbook</div>
+            <div class="related-card-type">Digital Download &bull; PDF</div>
+            <div class="related-card-price">$19.99</div>
+          </div>
+        </div>
+        <div class="related-card">
+          <div class="related-card-img">Product Image</div>
+          <div class="related-card-info">
+            <div class="related-card-title">Interview Prep Toolkit</div>
+            <div class="related-card-type">Digital Download &bull; PDF + Templates</div>
+            <div class="related-card-price">$14.99</div>
+          </div>
+        </div>
+        <div class="related-card">
+          <div class="related-card-img">Product Image</div>
+          <div class="related-card-info">
+            <div class="related-card-title">90-Day Career Roadmap</div>
+            <div class="related-card-type">Digital Download &bull; PDF</div>
+            <div class="related-card-price">$12.99</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="logo-text">Career <span>Cafe</span></div>
+        <p class="footer-tagline">Tools, templates, and systems for the<br>ambitious professional. Plan your career.<br>Own your story.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="#">Journals &amp; Planners</a></li>
+          <li><a href="#">Resume Tools</a></li>
+          <li><a href="#">Interview Prep</a></li>
+          <li><a href="#">Career Bundles</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Career Cafe. All rights reserved.</span>
+      <span>Powered by Wix eCommerce</span>
+    </div>
+  </footer>
+
+  <div class="wix-spec-badge">Wix Product Page Template &mdash; Career Cafe</div>
+
+  <script>
+    function toggleAccordion(btn) {
+      const body = btn.nextElementSibling;
+      const isOpen = btn.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.accordion-header').forEach(h => h.classList.remove('open'));
+      document.querySelectorAll('.accordion-body').forEach(b => b.classList.remove('open'));
+      // Open clicked if it was closed
+      if (!isOpen) {
+        btn.classList.add('open');
+        body.classList.add('open');
+      }
+    }
+  </script>
+
+</body>
+</html>
